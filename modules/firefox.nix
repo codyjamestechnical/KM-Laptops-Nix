@@ -20,34 +20,34 @@
 
     policies = {
       # Updates & Background Services
-      AppAutoUpdate                 = lock-true;
-      BackgroundAppUpdate           = lock-true;
+      AppAutoUpdate                 = true;
+      BackgroundAppUpdate           = true;
 
       # Feature Disabling
-      DisableBuiltinPDFViewer       = lock-false;
-      DisableFirefoxStudies         = lock-true;
-      DisableFirefoxAccounts        = lock-true;
-      DisableFirefoxScreenshots     = lock-false;
-      DisableForgetButton           = lock-false;
-      DisableMasterPasswordCreation = lock-true;
-      DisableProfileImport          = lock-true;
-      DisableProfileRefresh         = lock-false;
-      DisableSetDesktopBackground   = lock-false;
-      DisablePocket                 = lock-true;
-      DisableTelemetry              = lock-true;
-      DisableFormHistory            = lock-true;
-      DisablePasswordReveal         = lock-true;
+      DisableBuiltinPDFViewer       = false;
+      DisableFirefoxStudies         = true;
+      DisableFirefoxAccounts        = true;
+      DisableFirefoxScreenshots     = false;
+      DisableForgetButton           = false;
+      DisableMasterPasswordCreation = true;
+      DisableProfileImport          = true;
+      DisableProfileRefresh         = false;
+      DisableSetDesktopBackground   = false;
+      DisablePocket                 = true;
+      DisableTelemetry              = true;
+      DisableFormHistory            = true;
+      DisablePasswordReveal         = true;
 
       # Access Restrictions
-      BlockAboutConfig              = lock-true;
-      BlockAboutProfiles            = lock-true;
-      BlockAboutSupport             = lock-true;
+      BlockAboutConfig              = true;
+      BlockAboutProfiles            = true;
+      BlockAboutSupport             = true;
 
       # UI and Behavior
       # DisplayMenuBar                = "never";
-      DontCheckDefaultBrowser       = lock-true;
-      HardwareAcceleration          = lock-true;
-      OfferToSaveLogins             = lock-false;
+      DontCheckDefaultBrowser       = true;
+      HardwareAcceleration          = true;
+      OfferToSaveLogins             = false;
       DefaultDownloadDirectory      = config.xdg.userDirs.download;
 
       # Extensions
@@ -62,7 +62,7 @@
 
         # uBlock Origin
         "uBlock0@raymondhill.net" = {
-          install_url       = moz "ublock-origin";
+          install_url       = moz "uborigin";
           installation_mode = "force_installed";
           updates_disabled  = false;
         };
@@ -101,12 +101,12 @@
             "easyprivacy"
             "https://github.com/DandelionSprout/adfilt/raw/master/LegitimateURLShortener.txt"
             "plowe-0"
-            "ublock-abuse"
-            "ublock-badware"
-            "ublock-filters"
-            "ublock-privacy"
-            "ublock-quick-fixes"
-            "ublock-unbreak"
+            "ubabuse"
+            "ubbadware"
+            "ubfilters"
+            "ubprivacy"
+            "ubquick-fixes"
+            "ubunbreak"
             "urlhaus-1"
           ];
         };
