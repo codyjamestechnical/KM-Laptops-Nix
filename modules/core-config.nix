@@ -132,9 +132,7 @@
       kmail
       kontact
       ktnef
-      merkuro-mail
-      merkuro-contact
-      merkuro-calendar
+      merkuro
       elisa
     ];
 
