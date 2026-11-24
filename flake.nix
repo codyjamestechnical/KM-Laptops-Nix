@@ -21,9 +21,11 @@
       url = "github:KnoxMakers/KM-Laser";
       flake = false;
     };
+
+    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
   };
 
-  outputs = { self, nixpkgs, nixos-hardware, nix-flatpak, km-laser }@inputs: {
+  outputs = { self, nixpkgs, nixos-hardware, nix-flatpak, km-laser, nix-vscode-extensions }@inputs: {
     nixosConfigurations = {
       KM-Laptop-01 = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -31,6 +33,7 @@
         modules = [
           nix-flatpak.nixosModules.nix-flatpak
           nixos-hardware.nixosModules.lenovo-thinkpad-t14s
+          nix-vscode-extensions.nixosModules.nix-vscode-extensions
           ./hosts/KM-Laptop-01
           ./modules/core-config.nix
         ];
