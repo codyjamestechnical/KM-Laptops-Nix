@@ -68,6 +68,16 @@ in
       runAlways = true;
     };
 
+    # set lockscreen background to the same as the desktop background.
+    kscreenlocker = {
+      autoLock = true;
+      timeout = 15;
+
+      appearance = {
+        wallpaper = desktopWallpaper;
+      };
+    };
+
     workspace = {
       # Breeze Dark global theme, Plasma style, and color scheme.
       lookAndFeel = "org.kde.breezedark.desktop";
