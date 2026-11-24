@@ -162,7 +162,7 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-  
+
   ### STORAGE OPTIMIZATION ###
   # Enable auto-optimisation of the Nix store
   nix.optimise = {
@@ -178,29 +178,25 @@
   };
 
   ### AUTOMATIC SYSTEM UPGRADES ###
+  # Pulls the latest config straight from GitHub every hour.
   system.autoUpgrade = {
     enable = true;
-    flake = "/etc/nixos/nix-systems#${config.networking.hostName}";
-    dates = "03:00";
-    randomizedDelaySec = "30min";
+    flake = "github:codyjamestechnical/KM-Laptops-Nix#${config.networking.hostName}";
+    dates = "hourly";
+    randomizedDelaySec = "10min";
     allowReboot = false;
   };
 
-  # Pull the latest config from git before upgrading,
-  # same as the `rebuild` alias.
-  systemd.services.nixos-upgrade.serviceConfig.ExecStartPre =
-    "${pkgs.git}/bin/git -C /etc/nixos/nix-systems pull";
-
-  # Run a missed upgrade on next boot if the laptop was off at 03:00.
+  # Run a missed upgrade on next boot if the laptop was off when the timer fired.
   systemd.timers.nixos-upgrade.timerConfig.Persistent = true;
 
   ### CLEANUP TMP ON BOOT ###
   boot.tmp.cleanOnBoot = true;
-    
+
   ### NIX SETTINGS ###
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
     auto-optimise-store = true;
   };
-  
+
 }
