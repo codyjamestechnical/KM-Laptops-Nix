@@ -99,8 +99,8 @@
       speed-amsterdam = "iperf3 -c ams.speedtest.clouvider.net -p 5200-5209 && ping -U -c 10 ams.speedtest.clouvider.net";
       speed-canada = "iperf3 -c speedtest.mtl2.ca.leaseweb.net -p 5201-5210 && ping -U -c 10 speedtest.mtl2.ca.leaseweb.net";
 
-      # Pull latest git changes and rebuild switch NixOS with flake
-      rebuild = "sudo git -C /etc/nixos/nix-systems pull && sudo nixos-rebuild switch --flake '/etc/nixos/nix-systems#${config.networking.hostName}'";
+      # Rebuild switch NixOS from the latest commit on GitHub
+      rebuild = "sudo nixos-rebuild switch --refresh --flake 'github:codyjamestechnical/KM-Laptops-Nix#${config.networking.hostName}'";
 
     };
   };
