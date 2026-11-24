@@ -10,7 +10,7 @@
     "repo": "KM-FreeCAD",
     "branch": "main",
     "rev": "89443038054727fe30b2a57b1ea0660c65faee84",
-    "hash": ""
+    "hash": "sha256-lLP8oHNBPPNJCAxL5rzPSX4WH9x7zbWPcVjgAI9QCEs="
   },
   "addons": {
     "OpenTheme": {
@@ -19,7 +19,7 @@
       "repo": "OpenTheme",
       "branch": "main",
       "rev": "e516b65382f1b7210dab714fb88b43cbd319d3fe",
-      "hash": ""
+      "hash": "sha256-fE70AatGxUAonDREiFPNlPF+Ie6JKN4IGFAdtzSczuI="
     },
     "SaveAndRestore": {
       "type": "codeberg",
@@ -27,7 +27,7 @@
       "repo": "SaveAndRestore",
       "branch": "main",
       "rev": "14bd1f9026b2826f708ddef49aedd4858bc8a8ec",
-      "hash": ""
+      "hash": "sha256-ZQ9Vq2TZhQHBrQsQsxByW72feNxYcT9TcV5y5oR9I6I="
     },
     "SaveUtils": {
       "type": "github",
@@ -35,7 +35,7 @@
       "repo": "SaveUtils",
       "branch": "main",
       "rev": "63726e8a4015eafe88fc0db501633f859acb585d",
-      "hash": ""
+      "hash": "sha256-BSOsQBh3e2lCWwOFd+Y1K/o9WT8HpN1cUQYJDRkKRIs="
     }
   }
 }
