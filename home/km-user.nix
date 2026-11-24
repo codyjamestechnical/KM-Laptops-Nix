@@ -6,6 +6,21 @@ let
   menuIcon = ../assets/knox_makers_logo_large_light.svg;
   desktopWallpaper = ../assets/km-laptop-background.jpg;
   internalDisplayScale = "1.15";
+
+  zshConfig = ../assets/.zshrc;
+
+  userAvatarSvg = ../assets/km-user-avatar.svg;
+  # Convert svg to png
+  userAvatar = pkgs.runCommand "km-user-avatar.png" {
+    nativeBuildInputs = [ pkgs.librsvg ];
+  } ''
+    rsvg-convert \
+      --format png \
+      --width 512 \
+      --height 512 \
+      --output="$out" \
+      ${userAvatarSvg}
+  '';
 in
 {
   home.username = "kmuser";
@@ -14,6 +29,13 @@ in
   # Set this for the initial Home Manager deployment and do not routinely
   # bump it when upgrading packages.
   home.stateVersion = "26.05";
+
+  # User avatar for Plasma/SDDM and set .zshrc
+  home.file = {
+    ".face".source = userAvatar;
+    ".face.icon".source = userAvatar;
+    ".zshrc".source = zshConfig;
+  };
 
   programs.plasma = {
     enable = true;
