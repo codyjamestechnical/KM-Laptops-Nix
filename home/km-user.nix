@@ -48,14 +48,9 @@ in
     };
 
     # Automatically lock after 15 minutes
-    # and set lockscreen wallpaper to match desktop
     kscreenlocker = {
       autoLock = true;
       timeout = 15;
-
-      appearance = {
-        wallpaper = desktopWallpaper;
-      };
     };
 
     # Set scaling only on connected internal laptop panels.
@@ -92,6 +87,19 @@ in
 
       # Theme scripts run at priority 1 and panels at priority 2.
       priority = 4;
+      runAlways = true;
+    };
+
+    # Set the lock-screen wallpaper using a direct file URL.
+    # Run after the global theme and other appearance scripts.
+    startup.startupScript."km-lockscreen-wallpaper" = {
+      text = ''
+        ${pkgs.kdePackages.kde-cli-tools}/bin/kwriteconfig6 --file kscreenlockerrc --group Greeter --key WallpaperPlugin org.kde.image
+
+        ${pkgs.kdePackages.kde-cli-tools}/bin/kwriteconfig6 --file kscreenlockerrc --group Greeter --group Wallpaper --group org.kde.image --group General --key Image "file://${desktopWallpaper}"
+      '';
+
+      priority = 5;
       runAlways = true;
     };
 
@@ -144,7 +152,7 @@ in
                 "applications:code.desktop"
 
                 # Arduino IDE
-                "applications:cc.arduino.IDE2"
+                "applications:cc.arduino.IDE2.desktop"
               ];
             };
           }
