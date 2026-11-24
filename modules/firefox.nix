@@ -48,7 +48,40 @@
       DontCheckDefaultBrowser       = true;
       HardwareAcceleration          = true;
       OfferToSaveLogins             = false;
-      DefaultDownloadDirectory      = config.xdg.userDirs.download;
+      DefaultDownloadDirectory      = "\${home}/Downloads";
+
+      # Search engines (note: this policy is only honored by Firefox ESR)
+      SearchEngines = {
+        Default         = "DuckDuckGo";
+        DefaultPrivate  = "DuckDuckGo";
+        PreventInstalls = false;
+
+        Add = let
+          nixIcon = "file://${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+        in [
+          {
+            Name        = "Nix Options";
+            Alias       = "@no";
+            IconURL     = nixIcon;
+            Method      = "GET";
+            URLTemplate = "https://search.nixos.org/options?channel=unstable&query={searchTerms}";
+          }
+          {
+            Name        = "Nix Packages";
+            Alias       = "@np";
+            IconURL     = nixIcon;
+            Method      = "GET";
+            URLTemplate = "https://search.nixos.org/packages?channel=unstable&query={searchTerms}";
+          }
+          {
+            Name        = "NixOS Wiki";
+            Alias       = "@nw";
+            IconURL     = nixIcon;
+            Method      = "GET";
+            URLTemplate = "https://wiki.nixos.org/w/index.php?search={searchTerms}";
+          }
+        ];
+      };
 
       # Extensions
       # Check about:support for extension/add-on ID strings.
@@ -112,31 +145,5 @@
         };
       };
     };
-
-
-
-      profiles.default.search = {
-        force           = true;
-        default         = "ddg";
-        privateDefault  = "ddg";
-
-        engines = {
-          "Nix Options" = {
-            definedAliases = [ "@no" ];
-            icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-            urls = [ { template = "https://search.nixos.org/options?channel=unstable&query={searchTerms}"; } ];
-          };
-          "Nix Packages" = {
-            definedAliases = [ "@np" ];
-            icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-            urls = [ { template = "https://search.nixos.org/packages?channel=unstable&query={searchTerms}"; } ];
-          };
-          "NixOS Wiki" = {
-            definedAliases = [ "@nw" ];
-            icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-            urls = [ { template = "https://wiki.nixos.org/w/index.php?search={searchTerms}"; } ];
-          };
-        };
-      };
   };
 }
