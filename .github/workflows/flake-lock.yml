@@ -1,0 +1,37 @@
+# Regenerates flake.lock whenever flake.nix changes (e.g. a new input is
+# added) and commits it back to the branch. Keeps the lock file in sync so
+# laptops building from GitHub never hit "cannot write lock file".
+name: Sync flake.lock
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "flake.nix"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  lock:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: DeterminateSystems/nix-installer-action@v16
+
+      - name: Sync lock file with flake.nix
+        run: nix flake lock
+
+      - name: Commit and push if changed
+        run: |
+          if ! git diff --quiet flake.lock; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add flake.lock
+            git commit -m "ci: sync flake.lock with flake.nix"
+            git push
+          else
+            echo "flake.lock already up to date"
+          fi
