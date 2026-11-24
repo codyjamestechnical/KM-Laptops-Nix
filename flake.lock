@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "km-laser": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1696959993,
+        "narHash": "sha256-zGmNMsq1vizXLeW+yPKUNzgc8+wH4kt9BYkph3R+Qzc=",
+        "owner": "KnoxMakers",
+        "repo": "KM-Laser",
+        "rev": "0145988ea620858dc0b10a97d843f0f0ff269dfd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "KnoxMakers",
+        "repo": "KM-Laser",
+        "type": "github"
+      }
+    },
     "nix-flatpak": {
       "locked": {
         "lastModified": 1767983141,
@@ -54,6 +70,7 @@
     },
     "root": {
       "inputs": {
+        "km-laser": "km-laser",
         "nix-flatpak": "nix-flatpak",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs"
