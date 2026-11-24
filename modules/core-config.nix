@@ -14,6 +14,9 @@
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
+  # Enable Bluetooth.
+  hardware.bluetooth.enable = true;
+
   # WiFi SSID & Password.
   networking.networkmanager.enable = true;
   networking.networkmanager.ensureProfiles.profiles = {
