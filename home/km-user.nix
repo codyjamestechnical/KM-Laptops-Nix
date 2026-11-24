@@ -102,6 +102,9 @@ in
 
                 # Visual Studio Code
                 "applications:code.desktop"
+
+                # Arduino IDE
+                "applications:cc.arduino.IDE2"
               ];
             };
           }
