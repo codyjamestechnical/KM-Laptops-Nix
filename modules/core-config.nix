@@ -1,5 +1,9 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
+let
+  # KM-Laser Inkscape extension bundle, exposed to the Inkscape flatpak below.
+  km-laser = pkgs.callPackage ../packages/km-laser.nix { src = inputs.km-laser; };
+in
 {
   imports = [
     ./firefox.nix
@@ -114,6 +118,23 @@
     };
   };
 
+  # Enable and configure VSCode.
+  programs.vscode = {
+    enable = true;
+    extensions = with pkgs.vscode-extensions; [
+      dracula-theme.theme-dracula
+      yzhang.markdown-all-in-one
+      catppuccin.catppuccin-vsc
+      esbenp.prettier-vscode
+      redhat.vscode-yaml
+      golang.go
+      ana-mara4353.nix-ide
+      jnoortheen.nix-ide
+      mechatroner.rainbow-csv
+      docker.docker
+    ];
+  };
+  
   ### Enable TMUX ###
   programs.tmux = {
     enable = true;
@@ -176,6 +197,20 @@
       "org.videolan.VLC"
       "com.transmissionbt.Transmission"
     ];
+
+    # Make the KM-Laser extensions available to all users inside the
+    # Inkscape flatpak: bind-mount the Nix store path into the sandbox
+    # and point Inkscape's extensions directory override at it.
+    # Note: this replaces the per-user extensions directory, so users
+    # can't additionally install their own extensions via the GUI.
+    overrides = {
+      "org.inkscape.Inkscape" = {
+        Context.filesystems = [
+          "${km-laser}/share/inkscape/extensions:ro"
+        ];
+        Environment.INKSCAPE_EXTENSIONS_DIR = "${km-laser}/share/inkscape/extensions";
+      };
+    };
   };
 
   # Allow unfree packages

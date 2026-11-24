@@ -49,6 +49,18 @@
           Favicon   = "https://knoxmakers.org/favicon.ico";
           Placement = "toolbar";
         }
+        {
+          Title     = "Knox Makers Wiki";
+          URL       = "https://wiki.knoxmakers.org";
+          Favicon   = "https://wiki.knoxmakers.org/favicon.ico";
+          Placement = "toolbar";
+        }
+        {
+          Title     = "";
+          URL       = "";
+          Favicon   = "";
+          Placement = "toolbar";
+        }
       ];
 
       # UI and Behavior

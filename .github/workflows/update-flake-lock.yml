@@ -1,26 +1,39 @@
-# Weekly bump of all flake inputs (nixpkgs, nixos-hardware, nix-flatpak).
-# Opens a PR so you can review what's changing before the fleet picks it up.
-# Merge the PR and every laptop upgrades on its next hourly run.
-name: Update flake inputs
+name: Update flake.lock
 
 on:
   schedule:
-    - cron: "0 6 * * 1" # Mondays 06:00 UTC
+    # Daily at 04:00 UTC (23:00 America/New_York during EST)
+    - cron: "0 4 * * *"
+  # Allow manual runs from the Actions tab
   workflow_dispatch:
 
 permissions:
   contents: write
-  pull-requests: write
 
 jobs:
-  update:
+  update-flake-lock:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - uses: DeterminateSystems/nix-installer-action@v16
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v16
 
-      - uses: DeterminateSystems/update-flake-lock@v24
-        with:
-          pr-title: "Update flake inputs"
-          commit-msg: "flake.lock: update inputs"
+      - name: Update flake.lock
+        run: nix flake update
+
+      - name: Verify the configuration still evaluates
+        run: nix flake check --all-systems
+
+      - name: Commit and push if changed
+        run: |
+          if git diff --quiet flake.lock; then
+            echo "flake.lock is already up to date."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898024+github-actions[bot]@users.noreply.github.com"
+          git add flake.lock
+          git commit -m "flake.lock: automatic update ($(date -u +%Y-%m-%d))"
+          git push

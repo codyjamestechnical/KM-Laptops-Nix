@@ -14,9 +14,16 @@
     # manage flatpak apps declaratively
     # https://wiki.nixos.org/wiki/Flatpak
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.7.0";
+
+    # KM-Laser Inkscape extension bundle (pinned via flake.lock)
+    # https://github.com/KnoxMakers/KM-Laser
+    km-laser = {
+      url = "github:KnoxMakers/KM-Laser";
+      flake = false;
+    };
   };
 
-  outputs = { self, nixpkgs, nixos-hardware, nix-flatpak }@inputs: {
+  outputs = { self, nixpkgs, nixos-hardware, nix-flatpak, km-laser }@inputs: {
     nixosConfigurations = {
       KM-Laptop-01 = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
