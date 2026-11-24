@@ -92,7 +92,7 @@
 
         # uBlock Origin
         "uBlock0@raymondhill.net" = {
-          install_url       = moz "uborigin";
+          install_url       = moz "ublock-origin";
           installation_mode = "force_installed";
           updates_disabled  = false;
         };
