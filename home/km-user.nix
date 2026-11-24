@@ -5,6 +5,7 @@ let
   # Nix copies them into the store and Plasma receives absolute paths.
   menuIcon = ../assets/knox_makers_logo_large_light.svg;
   desktopWallpaper = ../assets/km-laptop-background.jpg;
+  internalDisplayScale = "1.15";
 in
 {
   home.username = "kmuser";
@@ -16,6 +17,31 @@ in
 
   programs.plasma = {
     enable = true;
+
+    # Set scaling only on connected internal laptop panels.
+    # External displays are deliberately left unchanged.
+    startup.startupScript."km-display-scale" = {
+      text = ''
+        kscreen_doctor=${pkgs.kdePackages.libkscreen}/bin/kscreen-doctor
+        jq=${pkgs.jq}/bin/jq
+
+        for output in $(
+          "$kscreen_doctor" -j |
+            "$jq" -r '.outputs[] |
+              select(
+                .connected == true and
+                (.name | test("^(eDP|LVDS|DSI)-"))
+              ) |
+              .name'
+        ); do
+          "$kscreen_doctor" "output.$output.scale.${internalDisplayScale}"
+        done
+      '';
+
+      # Apply before the panel (priority 2) and wallpaper (priority 4).
+      priority = 1;
+      runAlways = true;
+    };
 
     # Apply the wallpaper after themes and panel setup.
     # runAlways also avoids stale Plasma Manager "last run" state.
@@ -56,11 +82,11 @@ in
                 # KDE Dolphin
                 "applications:org.kde.dolphin.desktop"
 
-                # Flatpaks
-                "applications:org.kicad.KiCad.desktop"
-
                 # NixOS Firefox ESR
                 "applications:firefox-esr.desktop"
+
+                # Flatpaks
+                "applications:org.kicad.KiCad.desktop"
 
                 # FreeCAD AppImage package
                 "applications:org.freecad.FreeCAD.desktop"

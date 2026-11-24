@@ -7,6 +7,7 @@
   # Disable some KDE packages.
   environment.plasma6.excludePackages = with pkgs.kdePackages; [
       elisa
+      discover
     ];
 
   # KMail, Kontact, and Merkuro come from the KDE PIM suite, which Plasma 6
