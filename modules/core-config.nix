@@ -118,9 +118,6 @@ in
     };
   };
 
-  # Add nix-vscode-extensions overlay to Nixpkgs
-  nixpkgs.overlays = inputs.nix-vscode-extensions.overlays.default;
-
   # Enable and configure VSCode.
   programs.vscode = {
     enable = true;
