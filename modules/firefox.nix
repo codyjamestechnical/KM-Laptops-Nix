@@ -13,6 +13,8 @@
     preferences = {
       "browser.startup.homepage" = "https://wiki.knoxmakers.org";
       "widget.use-xdg-desktop-portal.file-picker" = 1; # use kde file picker
+      "browser.bookmarks.file" = ./bookmarks.html;
+      "browser.places.importBookmarksHTML" = true;
     };
 
     policies = {
@@ -39,6 +41,17 @@
       BlockAboutConfig              = true;
       BlockAboutProfiles            = true;
       BlockAboutSupport             = true;
+
+      # Bookmarks
+      # Managed bookmarks placed by policy. Placement can be "toolbar" or "menu".
+      Bookmarks = [
+        {
+          Title     = "Knox Makers";
+          URL       = "https://knoxmakers.org";
+          Favicon   = "https://knoxmakers.org/favicon.ico";
+          Placement = "toolbar";
+        }
+      ];
 
       # UI and Behavior
       # DisplayMenuBar                = "never";
