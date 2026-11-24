@@ -129,12 +129,12 @@
 
   # Disable some KDE packages.
   environment.plasma6.excludePackages = with pkgs.kdePackages; [
-      kmail
-      kontact
-      ktnef
-      merkuro
       elisa
     ];
+
+  # KMail, Kontact, and Merkuro come from the KDE PIM suite, which Plasma 6
+  # enables by default. It must be disabled here instead of via excludePackages.
+  programs.kde-pim.enable = false;
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
