@@ -33,7 +33,6 @@
         modules = [
           nix-flatpak.nixosModules.nix-flatpak
           nixos-hardware.nixosModules.lenovo-thinkpad-t14s
-          nix-vscode-extensions.nixosModules.nix-vscode-extensions
           ./hosts/KM-Laptop-01
           ./modules/core-config.nix
         ];
