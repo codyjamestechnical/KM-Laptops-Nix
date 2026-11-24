@@ -3,6 +3,8 @@
 {
   imports = [
     ./firefox.nix
+    ../users/km-admin.nix
+    ../users/km-user.nix
   ];
 
   # Use the systemd-boot EFI boot loader.
