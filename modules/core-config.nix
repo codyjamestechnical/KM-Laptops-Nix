@@ -129,12 +129,12 @@
 
   # Disable some KDE packages.
   environment.plasma6.excludePackages = with pkgs.kdePackages; [
-      KMail
-      Kontact
-      KTnef
-      Merkuro Mail
-      Merkuro Contacts
-      Merkuro Calendar
+      kmail
+      kontact
+      ktnef
+      merkuro-mail
+      merkuro-contacts
+      merkuro-calendar
       elisa
     ];
 
