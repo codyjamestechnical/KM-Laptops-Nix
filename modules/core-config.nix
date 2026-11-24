@@ -135,7 +135,6 @@ in
           esbenp.prettier-vscode
           redhat.vscode-yaml
           golang.go
-          ana-mara4353.nix-ide
           jnoortheen.nix-ide
           mechatroner.rainbow-csv
           docker.docker
