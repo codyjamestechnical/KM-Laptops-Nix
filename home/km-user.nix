@@ -25,10 +25,15 @@ in
       lowBattery.turnOffDisplay.idleTimeout = 900;
     };
 
-    # Automatically lock after 15 minutes.
+    # Automatically lock after 15 minutes
+    # and set lockscreen wallpaper to match desktop
     kscreenlocker = {
       autoLock = true;
       timeout = 15;
+
+      appearance = {
+        wallpaper = desktopWallpaper;
+      };
     };
 
     # Set scaling only on connected internal laptop panels.
@@ -66,16 +71,6 @@ in
       # Theme scripts run at priority 1 and panels at priority 2.
       priority = 4;
       runAlways = true;
-    };
-
-    # set lockscreen background to the same as the desktop background.
-    kscreenlocker = {
-      autoLock = true;
-      timeout = 15;
-
-      appearance = {
-        wallpaper = desktopWallpaper;
-      };
     };
 
     workspace = {
