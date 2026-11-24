@@ -2,13 +2,10 @@
 
 {
 
-  environment.systemPackages = [
-    pkgs.firefox
-  ];
-
-  # Enable Firefox
+  # Enable Firefox (ESR is required for the SearchEngines policy)
   programs.firefox = {
     enable = true;
+    package = pkgs.firefox-esr;
 
     # enable plasma-browser-integration
     nativeMessagingHosts.packages = [ pkgs.kdePackages.plasma-browser-integration ];
