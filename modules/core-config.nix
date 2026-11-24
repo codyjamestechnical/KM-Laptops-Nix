@@ -137,19 +137,19 @@ in
   # Enable and configure VSCode.
   programs.vscode = {
     enable = true;
-    extensions = (with pkgs.nix-vscode-extensions.open-vsx; [
-      janisdd.vscode-edit-csv
-    ]) ++ (with pkgs.nix-vscode-extensions.vscode-marketplace; [
-      dracula-theme.theme-dracula
-      yzhang.markdown-all-in-one
-      catppuccin.catppuccin-vsc
-      esbenp.prettier-vscode
-      redhat.vscode-yaml
-      golang.go
-      jnoortheen.nix-ide
-      mechatroner.rainbow-csv
-      docker.docker
-    ]);
+    # extensions = (with pkgs.nix-vscode-extensions.open-vsx; [
+    #   janisdd.vscode-edit-csv
+    # ]) ++ (with pkgs.nix-vscode-extensions.vscode-marketplace; [
+    #   dracula-theme.theme-dracula
+    #   yzhang.markdown-all-in-one
+    #   catppuccin.catppuccin-vsc
+    #   esbenp.prettier-vscode
+    #   redhat.vscode-yaml
+    #   golang.go
+    #   jnoortheen.nix-ide
+    #   mechatroner.rainbow-csv
+    #   docker.docker
+    # ]);
   };
 
   ### Enable TMUX ###
