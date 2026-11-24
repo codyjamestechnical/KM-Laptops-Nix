@@ -124,6 +124,17 @@
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
 
+  # Disable some KDE packages.
+  environment.plasma6.excludePackages = with pkgs.kdePackages; [
+      KMail
+      Kontact
+      KTnef
+      Merkuro Mail
+      Merkuro Contacts
+      Merkuro Calendar
+      elisa
+    ];
+
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
