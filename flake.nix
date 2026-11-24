@@ -22,10 +22,22 @@
       flake = false;
     };
 
+    # Home manager
+    home-manager = {
+      url = "github:nix-community/home-manager/release-26.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    plasma-manager = {
+      url = "github:nix-community/plasma-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
+
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
   };
 
-  outputs = { self, nixpkgs, nixos-hardware, nix-flatpak, km-laser, nix-vscode-extensions }@inputs: {
+  outputs = { self, nixpkgs, nixos-hardware, nix-flatpak, ... }@inputs: {
     nixosConfigurations = {
       KM-Laptop-01 = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";

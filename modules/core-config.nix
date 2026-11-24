@@ -7,6 +7,10 @@ in
 {
   imports = [
     ./firefox.nix
+    ./flatpak.nix
+    ./plasma6.nix
+    ./zsh.nix
+    ./home-manager.nix
     ../users/km-admin.nix
     ../users/km-user.nix
   ];
@@ -84,40 +88,6 @@ in
     bazaar
   ];
 
-  # Set default shell to ZSH.
-  users.defaultUserShell = pkgs.zsh;
-
-  # ZSH configuration.
-  programs.zsh = {
-    enable = true;
-    enableBashCompletion = true;
-    histSize = 10000;
-
-    autosuggestions.enable = true;
-    shellAliases = {
-      # Systemctl Service Management
-      startsvc = "sudo systemctl start";
-      stopsvc = "sudo systemctl stop";
-      restartsvc = "sudo systemctl restart";
-      logsvc = "sudo journalctl -xeu";
-
-      # File system aliases
-      ls = "ls -lA";
-      cat = "bat";
-      spf = "superfile";
-
-      # Speed Tests
-      speed-atlanta = "iperf3 -c atl.speedtest.clouvider.net -p 5200-5209 && ping -U -c 10 atl.speedtest.clouvider.net";
-      speed-germany = "iperf3 -c speedtest.fra1.de.leaseweb.net -p 5201-5210 && ping -U -c 10 speedtest.fra1.de.leaseweb.net";
-      speed-amsterdam = "iperf3 -c ams.speedtest.clouvider.net -p 5200-5209 && ping -U -c 10 ams.speedtest.clouvider.net";
-      speed-canada = "iperf3 -c speedtest.mtl2.ca.leaseweb.net -p 5201-5210 && ping -U -c 10 speedtest.mtl2.ca.leaseweb.net";
-
-      # Rebuild switch NixOS from the latest commit on GitHub
-      rebuild = "sudo nixos-rebuild switch --refresh --flake 'github:codyjamestechnical/KM-Laptops-Nix#${config.networking.hostName}'";
-
-    };
-  };
-
   # Enable and configure VSCode.
   programs.vscode = {
     enable = true;
@@ -148,19 +118,6 @@ in
     allowPing = true;
   };
 
-  # Enable the KDE Plasma Desktop Environment.
-  services.displayManager.sddm.enable = true;
-  services.desktopManager.plasma6.enable = true;
-
-  # Disable some KDE packages.
-  environment.plasma6.excludePackages = with pkgs.kdePackages; [
-      elisa
-    ];
-
-  # KMail, Kontact, and Merkuro come from the KDE PIM suite, which Plasma 6
-  # enables by default. It must be disabled here instead of via excludePackages.
-  programs.kde-pim.enable = false;
-
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
@@ -177,42 +134,6 @@ in
   # Enable AppImage support.
   programs.appimage.enable = true;
   programs.appimage.binfmt = true;
-
-  # Declaratively manage flatpak apps via nix-flatpak.
-  services.flatpak = {
-    enable = true;
-    update.onActivation = true;
-    remotes = [
-      {
-        name = "flathub";
-        location = "https://dl.flathub.org/repo/flathub.flatpakrepo";
-      }
-    ];
-    packages = [
-      "org.kicad.KiCad"
-      "cc.arduino.IDE2"
-      "org.inkscape.Inkscape"
-      "org.gimp.GIMP"
-      "org.libreoffice.LibreOffice"
-      "com.prusa3d.PrusaSlicer"
-      "org.videolan.VLC"
-      "com.transmissionbt.Transmission"
-    ];
-
-    # Make the KM-Laser extensions available to all users inside the
-    # Inkscape flatpak: bind-mount the Nix store path into the sandbox
-    # and point Inkscape's extensions directory override at it.
-    # Note: this replaces the per-user extensions directory, so users
-    # can't additionally install their own extensions via the GUI.
-    overrides = {
-      "org.inkscape.Inkscape" = {
-        Context.filesystems = [
-          "${km-laser}/share/inkscape/extensions:ro"
-        ];
-        Environment.INKSCAPE_EXTENSIONS_DIR = "${km-laser}/share/inkscape/extensions";
-      };
-    };
-  };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
