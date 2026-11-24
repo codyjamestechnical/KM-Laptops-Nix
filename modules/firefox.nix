@@ -13,6 +13,7 @@
     preferences = {
       "browser.startup.homepage" = "https://wiki.knoxmakers.org";
       "widget.use-xdg-desktop-portal.file-picker" = 1; # use kde file picker
+      "browser.toolbars.bookmarks.visibility" = "always";
     };
 
     policies = {
@@ -65,6 +66,7 @@
 
       # UI and Behavior
       # DisplayMenuBar                = "never";
+      DisplayBookmarksToolbar       = "always";
       DontCheckDefaultBrowser       = true;
       HardwareAcceleration          = true;
       OfferToSaveLogins             = false;
