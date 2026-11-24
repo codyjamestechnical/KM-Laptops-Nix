@@ -77,6 +77,9 @@
     bazaar
   ];
 
+  # Set default shell to ZSH.
+  users.defaultUserShell = pkgs.zsh;
+
   # ZSH configuration.
   programs.zsh = {
     enable = true;

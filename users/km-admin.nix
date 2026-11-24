@@ -6,7 +6,6 @@
 }:
 {
   users.users."kmadmin" = {
-    defaultUserShell = pkgs.zsh;
     isNormalUser = true;
     description = "KM Admin";
     extraGroups = [ "networkmanager" "wheel" ];
