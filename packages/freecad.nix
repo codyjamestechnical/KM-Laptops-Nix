@@ -52,37 +52,60 @@ let
   # pinned revision changes.
   pinnedAddons = lib.mapAttrs fetchAddon sources.addons;
 
+  # FreeCAD 1.1+ (including this CAM+ build) keeps user data in a per-version
+  # directory, e.g. ~/.local/share/FreeCAD/v1-1, and only uses the legacy
+  # unversioned ~/.local/share/FreeCAD layout for profiles that predate it.
+  # Only the leading digits of each component matter (strips "cam+N" suffixes).
+  digits = s: lib.head (builtins.match "([0-9]+).*" s);
+  versionedDir = "v${digits (lib.versions.major version)}-${digits (lib.versions.minor version)}";
+
   # Launcher that syncs the addons into the per-user Mod directory, then execs
   # the real (AppImage-wrapped) FreeCAD sitting next to it as .freecad-wrapped.
   launcher = writeShellScript "freecad-with-km-addons" ''
     set -eu
 
-    mod_dir="''${XDG_DATA_HOME:-$HOME/.local/share}/FreeCAD/Mod"
-    mkdir -p "$mod_dir"
+    base="''${FREECAD_USER_DATA:-''${XDG_DATA_HOME:-$HOME/.local/share}/FreeCAD}"
 
-    # KM-FreeCAD: seed once, never overwrite afterwards -- the addon keeps
-    # itself up to date from GitHub on every FreeCAD start.
-    if [ ! -e "$mod_dir/KM-FreeCAD" ]; then
-      cp -r --no-preserve=mode,ownership ${kmFreecad} "$mod_dir/KM-FreeCAD"
-    fi
-
+    # sync_addon <mod_dir> <name> <store path>
+    #
     # Pinned addons: reinstall only when the pinned store path changes.
     # (A .nix-pin stamp inside the addon records the installed pin; if the
     # Addon Manager removes or reinstalls the addon, the pinned version is
     # restored on the next launch.)
     sync_addon() {
-      name="$1"
-      store="$2"
+      mod_dir="$1"
+      name="$2"
+      store="$3"
       stamp="$mod_dir/$name/.nix-pin"
       if [ ! -f "$stamp" ] || [ "$(cat "$stamp")" != "$store" ]; then
-        rm -rf "$mod_dir/$name"
+        rm -rf "$mod_dir/''${name:?}"
         cp -r --no-preserve=mode,ownership "$store" "$mod_dir/$name"
         printf '%s\n' "$store" > "$stamp"
       fi
     }
-    ${lib.concatStringsSep "\n    " (lib.mapAttrsToList
-      (name: addonSrc: ''sync_addon "${name}" "${addonSrc}"'')
-      pinnedAddons)}
+
+    # sync_mod_dir <mod_dir>
+    sync_mod_dir() {
+      mod_dir="$1"
+      mkdir -p "$mod_dir"
+
+      # KM-FreeCAD: seed once, never overwrite afterwards -- the addon keeps
+      # itself up to date from GitHub on every FreeCAD start.
+      if [ ! -e "$mod_dir/KM-FreeCAD" ]; then
+        cp -r --no-preserve=mode,ownership ${kmFreecad} "$mod_dir/KM-FreeCAD"
+      fi
+
+      ${lib.concatStringsSep "\n      " (lib.mapAttrsToList
+        (name: addonSrc: ''sync_addon "$mod_dir" "${name}" "${addonSrc}"'')
+        pinnedAddons)}
+    }
+
+    # Versioned layout used by this FreeCAD version (created if missing)...
+    sync_mod_dir "$base/${versionedDir}/Mod"
+    # ...plus the legacy unversioned layout, if this machine already has one.
+    if [ -d "$base/Mod" ]; then
+      sync_mod_dir "$base/Mod"
+    fi
 
     here="$(dirname "$(readlink -f "$0")")"
     exec "$here/.freecad-wrapped" "$@"
