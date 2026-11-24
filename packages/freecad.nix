@@ -1,6 +1,6 @@
 { lib, appimageTools, fetchurl, }:
 let
-  pname = "FreeCAD";
+  pname = "freecad";
   version = "1.1.4";
   pythonVersion = "311";
 
@@ -15,10 +15,10 @@ appimageTools.wrapType2 {
   inherit pname version src;
 
   extraInstallCommands = ''
-    install -Dm444 ${appimageContents}/*.desktop -t $out/share/applications
-    install -Dm444 ${appimageContents}/*.png -t $out/share/pixmaps
-    substituteInPlace $out/share/applications/*.desktop \
-      --replace-warn 'Exec=AppRun' 'Exec=freecad'
+    install -Dm444 ${appimageContents}/org.freecad.FreeCAD.desktop -t $out/share/applications
+    install -Dm444 ${appimageContents}/org.freecad.FreeCAD.svg -t $out/share/icons/hicolor/scalable/apps
+    substituteInPlace $out/share/applications/org.freecad.FreeCAD.desktop \
+      --replace-fail 'Exec=AppRun' 'Exec=freecad'
   '';
 
   meta = {

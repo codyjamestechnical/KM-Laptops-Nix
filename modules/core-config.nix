@@ -72,6 +72,7 @@
     superfile
     pv
     iperf3
+    bazaar
   ];
 
   # ZSH configuration.
