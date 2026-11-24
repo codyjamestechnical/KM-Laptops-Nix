@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 let
   # These paths refer to files already present in the repository.
@@ -17,13 +17,24 @@ in
   programs.plasma = {
     enable = true;
 
+    # Apply the wallpaper after themes and panel setup.
+    # runAlways also avoids stale Plasma Manager "last run" state.
+    startup.startupScript."km-wallpaper" = {
+      text = ''
+        ${pkgs.kdePackages.plasma-workspace}/bin/plasma-apply-wallpaperimage ${desktopWallpaper}
+      '';
+
+      # Theme scripts run at priority 1 and panels at priority 2.
+      priority = 4;
+      runAlways = true;
+    };
+
     workspace = {
       # Breeze Dark global theme, Plasma style, and color scheme.
       lookAndFeel = "org.kde.breezedark.desktop";
       theme = "breeze-dark";
       colorScheme = "BreezeDark";
 
-      wallpaper = desktopWallpaper;
     };
 
     panels = [
@@ -49,7 +60,7 @@ in
                 "applications:org.kicad.KiCad.desktop"
 
                 # NixOS Firefox ESR
-                "applications:firefox.desktop"
+                "applications:firefox-esr.desktop"
 
                 # FreeCAD AppImage package
                 "applications:org.freecad.FreeCAD.desktop"
