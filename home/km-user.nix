@@ -12,7 +12,7 @@ in
 
   # Set this for the initial Home Manager deployment and do not routinely
   # bump it when upgrading packages.
-  home.stateVersion = "26.11";
+  home.stateVersion = "26.05";
 
   programs.plasma = {
     enable = true;
