@@ -133,7 +133,7 @@
       kontact
       ktnef
       merkuro-mail
-      merkuro-contacts
+      merkuro-contact
       merkuro-calendar
       elisa
     ];
