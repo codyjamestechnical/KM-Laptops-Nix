@@ -1,0 +1,41 @@
+{
+  "appimage": {
+    "version": "1.1.1cam+3",
+    "url": "https://github.com/Connor9220/FreeCAD/releases/download/1.1.1cam+3/FreeCAD_1.1.1cam+3-Linux-x86_64-py311.AppImage",
+    "sha256": "f02b81edd6ea5d892dc762a13f806fe7979db32df72c57c0f8f756bf6348f445"
+  },
+  "kmFreecad": {
+    "type": "github",
+    "owner": "KnoxMakers",
+    "repo": "KM-FreeCAD",
+    "branch": "main",
+    "rev": "89443038054727fe30b2a57b1ea0660c65faee84",
+    "hash": ""
+  },
+  "addons": {
+    "OpenTheme": {
+      "type": "github",
+      "owner": "obelisk79",
+      "repo": "OpenTheme",
+      "branch": "main",
+      "rev": "e516b65382f1b7210dab714fb88b43cbd319d3fe",
+      "hash": ""
+    },
+    "SaveAndRestore": {
+      "type": "codeberg",
+      "owner": "apebbers",
+      "repo": "SaveAndRestore",
+      "branch": "main",
+      "rev": "14bd1f9026b2826f708ddef49aedd4858bc8a8ec",
+      "hash": ""
+    },
+    "SaveUtils": {
+      "type": "github",
+      "owner": "jefe317",
+      "repo": "SaveUtils",
+      "branch": "main",
+      "rev": "63726e8a4015eafe88fc0db501633f859acb585d",
+      "hash": ""
+    }
+  }
+}

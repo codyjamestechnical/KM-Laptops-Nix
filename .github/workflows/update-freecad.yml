@@ -1,0 +1,56 @@
+# Keeps packages/freecad-sources.json current: the FreeCAD CAM+ AppImage
+# (latest Connor9220/FreeCAD release) and the Knox Makers / CAM Jam addon
+# pins, including their Nix hashes. Build-verifies the package before
+# committing, so a bad upstream release never lands on the laptops.
+name: Update FreeCAD package
+
+on:
+  schedule:
+    # Weekly on Monday at 05:00 UTC (after the nightly flake.lock update)
+    - cron: "0 5 * * 1"
+  # Allow manual runs from the Actions tab
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-freecad:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v16
+
+      - name: Update FreeCAD pins
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: bash scripts/update-freecad.sh
+
+      - name: Exit early if nothing changed
+        id: diff
+        run: |
+          if git diff --quiet packages/freecad-sources.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "FreeCAD pins are already up to date."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            git diff packages/freecad-sources.json
+          fi
+
+      - name: Build the FreeCAD package to verify the new pins
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          nix build -L --impure --expr \
+            '(builtins.getFlake (toString ./.)).inputs.nixpkgs.legacyPackages.x86_64-linux.callPackage ./packages/freecad.nix { }'
+
+      - name: Commit and push
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898024+github-actions[bot]@users.noreply.github.com"
+          git add packages/freecad-sources.json
+          git commit -m "freecad: automatic update ($(date -u +%Y-%m-%d))"
+          git push
