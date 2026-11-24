@@ -18,6 +18,19 @@ in
   programs.plasma = {
     enable = true;
 
+    # Turn off the display after 15 minutes of inactivity.
+    powerdevil = {
+      AC.turnOffDisplay.idleTimeout = 900;
+      battery.turnOffDisplay.idleTimeout = 900;
+      lowBattery.turnOffDisplay.idleTimeout = 900;
+    };
+
+    # Automatically lock after 15 minutes.
+    kscreenlocker = {
+      autoLock = true;
+      timeout = 15;
+    };
+
     # Set scaling only on connected internal laptop panels.
     # External displays are deliberately left unchanged.
     startup.startupScript."km-display-scale" = {
