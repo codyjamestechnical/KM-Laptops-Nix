@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
 
@@ -82,7 +82,7 @@
             uiTheme            = "dark";
             uiAccentCustom     = true;
             uiAccentCustom0    = "#8300ff";
-            cloudStorageEnabled = mkForce false;
+            cloudStorageEnabled = false;
 
             importedLists = [
               "https://filters.adtidy.org/extension/ublock/filters/3.txt"
