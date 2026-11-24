@@ -1,9 +1,4 @@
 { config, pkgs, inputs, ... }:
-
-let
-  # KM-Laser Inkscape extension bundle, exposed to the Inkscape flatpak below.
-  km-laser = pkgs.callPackage ../packages/km-laser.nix { src = inputs.km-laser; };
-in
 {
   imports = [
     ./firefox.nix
