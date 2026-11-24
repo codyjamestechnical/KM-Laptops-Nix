@@ -144,6 +144,7 @@
   # Declaratively manage flatpak apps via nix-flatpak.
   services.flatpak = {
     enable = true;
+    update.onActivation = true;
     remotes = [
       {
         name = "flathub";
