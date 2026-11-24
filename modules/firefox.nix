@@ -13,8 +13,6 @@
     preferences = {
       "browser.startup.homepage" = "https://wiki.knoxmakers.org";
       "widget.use-xdg-desktop-portal.file-picker" = 1; # use kde file picker
-      "browser.bookmarks.file" = ./bookmarks.html;
-      "browser.places.importBookmarksHTML" = true;
     };
 
     policies = {
