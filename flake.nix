@@ -18,7 +18,7 @@
 
   outputs = { self, nixpkgs, nixos-hardware, nix-flatpak }@inputs: {
     nixosConfigurations = {
-      laptop-01 = nixpkgs.lib.nixosSystem {
+      KM-Laptop-01 = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
