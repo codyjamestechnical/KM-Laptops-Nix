@@ -118,23 +118,32 @@ in
     };
   };
 
+  # Add nix-vscode-extensions overlay to Nixpkgs
+  nixpkgs.overlays = nix-vscode-extensions.overlays.default;
+
   # Enable and configure VSCode.
   programs.vscode = {
     enable = true;
-    extensions = with pkgs.vscode-extensions; [
-      dracula-theme.theme-dracula
-      yzhang.markdown-all-in-one
-      catppuccin.catppuccin-vsc
-      esbenp.prettier-vscode
-      redhat.vscode-yaml
-      golang.go
-      ana-mara4353.nix-ide
-      jnoortheen.nix-ide
-      mechatroner.rainbow-csv
-      docker.docker
+    extensions = with pkgs; [
+      (vscode-with-extensions.override {
+        vscodeExtensions = (with pkgs.nix-vscode-extensions.open-vsx; [
+          janisdd.vscode-edit-csv
+        ]) ++ (with pkgs.nix-vscode-extensions.vscode-marketplace; [
+          dracula-theme.theme-dracula
+          yzhang.markdown-all-in-one
+          catppuccin.catppuccin-vsc
+          esbenp.prettier-vscode
+          redhat.vscode-yaml
+          golang.go
+          ana-mara4353.nix-ide
+          jnoortheen.nix-ide
+          mechatroner.rainbow-csv
+          docker.docker
+        ]);
+      })
     ];
   };
-  
+
   ### Enable TMUX ###
   programs.tmux = {
     enable = true;
