@@ -18,7 +18,7 @@ appimageTools.wrapType2 {
     install -Dm444 ${appimageContents}/*.desktop -t $out/share/applications
     install -Dm444 ${appimageContents}/*.png -t $out/share/pixmaps
     substituteInPlace $out/share/applications/*.desktop \
-      --replace-warn 'Exec=AppRun' 'Exec=${meta.mainProgram}'
+      --replace-warn 'Exec=AppRun' 'Exec=freecad'
   '';
 
   meta = {
