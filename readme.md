@@ -114,12 +114,7 @@ The same thing by hand, if you'd rather (or if a script fails).
 
 ### 5. Point the laptop at the flake
 
-There is no separate "enable flakes" step any more. The flake has to be
-evaluated to install the flake, so flakes must be on before this command runs -
-but you don't need to edit `/etc/nixos/configuration.nix` and rebuild twice to
-get there. `modules/core-config.nix` already sets
-`nix.settings.experimental-features`, so enabling them for this one command is
-enough, and from this switch onwards the flake keeps them enabled itself:
+Run:
 
 ```bash
 sudo NIX_CONFIG='experimental-features = nix-command flakes' \
