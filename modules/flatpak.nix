@@ -15,6 +15,14 @@ in
       }
     ];
     packages = [
+      rec {
+        appId = "io.github.meerk40t.meerk40t";
+        sha256 = "5ced7ffe4bfb5633e9ff096cbb8b215af7209a6d1c8b1b776be334921719d13e";
+        bundle = "${pkgs.fetchurl {
+          url = "https://github.com/jondale/meerk40t/releases/download/0.9.9040.30/MeerK40t-linux-30.flatpak";
+          inherit sha256;
+        }}";
+      }
       "org.kicad.KiCad"
       "cc.arduino.IDE2"
       "org.inkscape.Inkscape"
